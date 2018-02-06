@@ -1,5 +1,6 @@
 {
-    "dlls": [ "../../Wr.UmbracoPhoneManager/bin/Wr.UmbracoPhoneManager.dll" ],
-    "packageXmlTemplate": "../../Wr.UmbracoPhoneManager/Package.xml",
-    "includeFoldersOrFiles": [ "../../Wr.UmbracoPhoneManager/App_Plugins/phonemanager/manifest.package", "../../Wr.UmbracoPhoneManager/App_Plugins/anotherplugin" ]
+    "projectRoot": "../../Wr.UmbracoPhoneManager",
+    "dlls": [ "/bin/Wr.UmbracoPhoneManager.dll" ],
+    "packageXmlTemplate": "Package.xml",
+    "includeFoldersOrFiles": [ "/App_Plugins/phonemanager/manifest.package", "/App_Plugins/anotherplugin" ]
 }
