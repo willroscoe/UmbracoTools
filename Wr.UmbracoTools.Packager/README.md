@@ -1,7 +1,7 @@
  UmbracoTools.Packager
 =====================
 
-A windows 10 x64 console program to automatically create an Umbraco package .zip file which can be installed in the Umbraco backoffice Packages section.
+A windows 10 x64 .net core 2.0 console program to automatically create an Umbraco package .zip file which can be installed in the Umbraco backoffice Packages section.
 
 The requirements to use the program are:
 - a json settings file. Note: **Except packageXmlTemplate, all paths are relative to the project root defined by  the 'projectRoot' field**
