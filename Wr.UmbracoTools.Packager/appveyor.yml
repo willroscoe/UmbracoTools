@@ -41,18 +41,15 @@ dotnet_csproj:
   informational_version: '{version}'
 
 before_build:
-- appveyor-retry dotnet restore -v Minimal
+  # Display minimal restore text
+  - cmd: dotnet restore ./Wr.UmbracoTools.Packager/Wr.UmbracoTools.Packager.csproj --verbosity m
 
 build_script:
-- dotnet publish -c release --self-contained --runtime win10-x64
-
-build:
-  publish_nuget: false
-  include_nuget_references: false
-  verbosity: minimal
+  # output will be in ./src/bin/debug/netcoreapp1.1/publish
+  - cmd: dotnet publish ./Wr.UmbracoTools.Packager/Wr.UmbracoTools.Packager.csproj -c release --self-contained --runtime win10-x64
 
 artifacts:
-- path: bin\release\netcoreapp2.0\win10-x64\publish
+- path: Wr.UmbracoTools.Packager\bin\release\netcoreapp2.0\win10-x64\publish
   name: runtimes
 
 deploy:
