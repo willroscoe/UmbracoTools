@@ -1,0 +1,70 @@
+version: 1.0.{build}
+
+image: Visual Studio 2017
+
+# branches to build
+branches:
+  # whitelist
+  only:
+    - master
+
+# Do not build on tags (GitHub and BitBucket)
+skip_tags: true
+
+# Start builds on tags only (GitHub and BitBucket)
+skip_non_tags: false
+
+# Ignore testing a commit if only .md files or assets have changed
+# Or if various strings are found in the commit message: updated readme, update readme, update docs, update version, update appveyor
+skip_commits:
+  files:
+    - appveyor.yml
+    - '**/*.md'
+    
+  message: /updated readme.*|update readme.*s|update docs.*|update version.*|update appveyor.*/
+
+# There's no need to alter the build number for a Pull Request (PR) since they don't modify anything
+pull_requests:
+  do_not_increment_build_number: true
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+build:
+  publish_nuget: false
+  include_nuget_references: false
+  verbosity: minimal
+
+artifacts:
+- path: bin\release\netcoreapp2.0\win10-x64\publish
+  name: runtimes
+
+deploy:
+   # GitHub Deployment for releases
+  - provider: GitHub
+    repository: willroscoe/UmbracoTools.Packager
+    tag: $(appveyor_build_version)
+    release: UmbracoTools.Packager $(appveyor_build_version)
+    description: 'Initial commit'
+    auth_token:
+      secure: +WQIHXHxdNFy3CQ2ItEubL7hOFj0triuSW0g6Sim2PZS9vI7iTNbDjpSyZmO2EcU
+    artifact: runtimes
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+
+notifications:
+- provider: Slack
+  auth_token:
+    secure: buvlNNG1gsj/tCAm8nJAqyD8XX2QpkOwHR1xmQCDWhcfHQFKSrejy0lQWS/jhzxRYzsUG2G5A+WMMj+lXdFDHvTJA8aoBwxNXA+N1aoaeG4=
+  channel: '#ci-builds'
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
