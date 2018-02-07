@@ -13,7 +13,7 @@
     <InformationalVersion>1.0.0</InformationalVersion>
     <Authors>Will Roscoe</Authors>
     <Company>Will Roscoe</Company>
-    <AssemblyTitle>Umbraco Packager</AssemblyTitle>
+    <AssemblyTitle>UmbracoTools Packager</AssemblyTitle>
     <Description>A program to automatically create an Umbraco package from a .Net project</Description>
     <Copyright>Copyright ©  2018</Copyright>
   </PropertyGroup>

@@ -8,6 +8,10 @@ branches:
   only:
     - master
 
+environment:
+  # Don't report back to the mothership
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
 # Do not build on tags (GitHub and BitBucket)
 skip_tags: true
 
@@ -20,7 +24,7 @@ skip_commits:
   files:
     - appveyor.yml
     - '**/*.md'
-    
+
   message: /updated readme.*|update readme.*s|update docs.*|update version.*|update appveyor.*/
 
 # There's no need to alter the build number for a Pull Request (PR) since they don't modify anything
@@ -35,6 +39,12 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
+
+before_build:
+- appveyor-retry dotnet restore -v Minimal
+
+build_script:
+- dotnet publish -c release --self-contained --runtime win10-x64
 
 build:
   publish_nuget: false
