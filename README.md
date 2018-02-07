@@ -1,5 +1,7 @@
  UmbracoTools.Packager
-=====================
+======================
+
+[![Build status](https://ci.appveyor.com/api/projects/status/3p1vyxh8vkrcy0si?svg=true)](https://ci.appveyor.com/project/willroscoe/umbracotools-packager)
 
 A windows 10 x64 .net core 2.0 console program to automatically create an Umbraco package .zip file which can be installed in the Umbraco backoffice Packages section.
 
