@@ -114,25 +114,24 @@ namespace Wr.UmbracoTools.Packager
 
         private void AddFile(FileInfo file, Stream fileStream, string overridePath = "")
         {
-            if (!_filesAdded.Contains(file.FullName)) // don't add duplicate files
+            var pathToFileRelativeToProjectRoot = overridePath;
+            if (string.IsNullOrEmpty(pathToFileRelativeToProjectRoot))
             {
-                var pathToFileRelativeToProjectRoot = overridePath;
-                if (string.IsNullOrEmpty(pathToFileRelativeToProjectRoot))
-                {
-                    pathToFileRelativeToProjectRoot = Path.GetDirectoryName(file.FullName).Replace(_pathToProjectRoot, "").Replace(@"\", "/");
-                }
+                pathToFileRelativeToProjectRoot = Path.GetDirectoryName(file.FullName).Replace(_pathToProjectRoot, "").Replace(@"\", "/");
+            }
 
-                var filesNode = _packageFile.Descendants("files").First();
-                filesNode.Add(
-                    new XElement("file",
-                        new XElement("guid", file.Name),
-                        new XElement("orgPath", pathToFileRelativeToProjectRoot),
-                        new XElement("orgName", file.Name)
-                ));
+            var filesNode = _packageFile.Descendants("files").First();
+            filesNode.Add(
+                new XElement("file",
+                    new XElement("guid", file.Name),
+                    new XElement("orgPath", pathToFileRelativeToProjectRoot),
+                    new XElement("orgName", file.Name)
+            ));
 
+            if (!_filesAdded.Contains(file.Name)) // don't add duplicate files to the zip file
+            {
                 AddEntryToArchive(file.Name, fileStream.CopyTo);
-
-                _filesAdded.Add(file.FullName);
+                _filesAdded.Add(file.Name);
             }
         }
 
